@@ -1,64 +1,64 @@
 'use strict';
 
-
-var resultWindows = {
-  'posX': 100,
-  'posY': 10,
-  'widght': 420,
-  'height': 270,
-  'frontColor': 'rgba(0, 0, 0, 0.7)',
-  'backColor': 'rgba(256, 256, 256, 1.0)'
-};
-var histogramParams = {
-  'histogramHeigth': 150,
-  'posX': resultWindows['posX'] + 50,
-  'posY': resultWindows['posY'] + 230,
-  'barWidth': 40,
-  'indent': 50,
-  'paddingTop': 15,
-  'currentPlayer': 'вы'
-};
-
-var docolorSaturation = function () {
-  var colorSaturation = [0.3, 0.5, 0.7, 0.9, 1];
-  var colorSaturationLength = colorSaturation.length;
-  var saturation = Math.floor(Math.random() * colorSaturationLength);
-  return colorSaturation[saturation];
-};
-
-var doColorFillStyle = function (playerTime, names) {
-  var colorCurrentUser = 'rgba(255, 0, 0, 1)';
-  var playerName = names[playerTime].toLowerCase();
-  return playerName === histogramParams['currentPlayer'] ? colorCurrentUser : 'rgba(0, 0, 255,' + docolorSaturation() + ')';
-};
-
-var findMaxPlayerTime = function (times) {
-  var max = -1;
-  var timesLength = times.length;
-  for (var playerResult = 0; playerResult < timesLength; playerResult++) {
-    var time = times[playerResult];
-    if (time > max) {
-      max = time;
-    }
-  }
-  return max;
-};
-
-var doWindow = function (ctx, posX, posY, widght, height, color) {
-  ctx.fillStyle = color;
-  ctx.strokeRect(posX, posY, widght, height);
-  doFillRect(ctx, posX, posY, widght, height);
-};
-
-var doFillText = function (ctx, text, posX, posY) {
-  ctx.fillText(text, posX, posY);
-};
-
-var doFillRect = function (ctx, posX, posY, widght, height) {
-  ctx.fillRect(posX, posY, widght, height);
-};
-
 window.renderStatistics = function (ctx, names, times) {
+  var resultWindows = {
+    'posX': 100,
+    'posY': 10,
+    'widght': 420,
+    'height': 270,
+    'frontColor': 'rgba(0, 0, 0, 0.7)',
+    'backColor': 'rgba(256, 256, 256, 1.0)'
+  };
+
+  var histogramParams = {
+    'histogramHeigth': 150,
+    'posX': resultWindows['posX'] + 50,
+    'posY': resultWindows['posY'] + 230,
+    'barWidth': 40,
+    'indent': 50,
+    'paddingTop': 15,
+    'currentPlayer': 'вы'
+  };
+
+  var docolorSaturation = function () {
+    var colorSaturation = [0.3, 0.5, 0.7, 0.9, 1];
+    var colorSaturationLength = colorSaturation.length;
+    var saturation = Math.floor(Math.random() * colorSaturationLength);
+    return colorSaturation[saturation];
+  };
+
+  var doColorFillStyle = function (playerTime, myNames) {
+    var colorCurrentUser = 'rgba(255, 0, 0, 1)';
+    var playerName = myNames[playerTime].toLowerCase();
+    return playerName === histogramParams['currentPlayer'] ? colorCurrentUser : 'rgba(0, 0, 255,' + docolorSaturation() + ')';
+  };
+
+  var findMaxPlayerTime = function (myTimes) {
+    var max = -1;
+    var timesLength = myTimes.length;
+    for (var playerResult = 0; playerResult < timesLength; playerResult++) {
+      var time = myTimes[playerResult];
+      if (time > max) {
+        max = time;
+      }
+    }
+    return max;
+  };
+
+  var doWindow = function (myCtx, posX, posY, widght, height, color) {
+    myCtx.fillStyle = color;
+    myCtx.strokeRect(posX, posY, widght, height);
+    doFillRect(ctx, posX, posY, widght, height);
+  };
+
+  var doFillText = function (myCtx, text, posX, posY) {
+    myCtx.fillText(text, posX, posY);
+  };
+
+  var doFillRect = function (myCtx, posX, posY, widght, height) {
+    myCtx.fillRect(posX, posY, widght, height);
+  };
+
   doWindow(ctx, resultWindows['posX'] + 10, resultWindows['posY'] + 10, resultWindows['widght'], resultWindows['height'], resultWindows['frontColor']);
   doWindow(ctx, resultWindows['posX'], resultWindows['posY'], resultWindows['widght'], resultWindows['height'], resultWindows['backColor']);
   ctx.fillStyle = '#000';
