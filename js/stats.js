@@ -20,24 +20,25 @@ window.renderStatistics = function (ctx, names, times) {
     'currentPlayer': 'вы'
   };
 
-  var docolorSaturation = function () {
-    var colorSaturation = [0.3, 0.5, 0.7, 0.9, 1];
-    var colorSaturationLength = colorSaturation.length;
-    var saturation = Math.floor(Math.random() * colorSaturationLength);
-    return colorSaturation[saturation];
+  var font = '16px PT Mono';
+  var style = '#000';
+
+  var getRandomColor = function (min, max) {
+    var color = Math.round(min - 0.5 + Math.random() * (max - min + 1));
+    return 'rgba(0, ' + color + ', 189, 1)';
   };
 
-  var doColorFillStyle = function (playerTime, myNames) {
+  var doColorFillStyle = function (playerTime, localNames) {
     var colorCurrentUser = 'rgba(255, 0, 0, 1)';
-    var playerName = myNames[playerTime].toLowerCase();
-    return playerName === histogramParams['currentPlayer'] ? colorCurrentUser : 'rgba(0, 0, 255,' + docolorSaturation() + ')';
+    var playerName = localNames[playerTime].toLowerCase();
+    return playerName === histogramParams['currentPlayer'] ? colorCurrentUser : getRandomColor(0, 150);
   };
 
-  var findMaxPlayerTime = function (myTimes) {
+  var getMaxPlayerTime = function (localTimes) {
     var max = -1;
-    var timesLength = myTimes.length;
+    var timesLength = localTimes.length;
     for (var playerResult = 0; playerResult < timesLength; playerResult++) {
-      var time = myTimes[playerResult];
+      var time = localTimes[playerResult];
       if (time > max) {
         max = time;
       }
@@ -45,29 +46,29 @@ window.renderStatistics = function (ctx, names, times) {
     return max;
   };
 
-  var doWindow = function (myCtx, posX, posY, widght, height, color) {
-    myCtx.fillStyle = color;
-    myCtx.strokeRect(posX, posY, widght, height);
+  var doWindow = function (localCtx, posX, posY, widght, height, color) {
+    localCtx.fillStyle = color;
+    localCtx.strokeRect(posX, posY, widght, height);
     doFillRect(ctx, posX, posY, widght, height);
   };
 
-  var doFillText = function (myCtx, text, posX, posY) {
-    myCtx.fillText(text, posX, posY);
+  var doFillText = function (localCtx, text, posX, posY, localStyle, localFont) {
+    localCtx.fillStyle = localStyle;
+    localCtx.font = localFont;
+    localCtx.fillText(text, posX, posY);
   };
 
-  var doFillRect = function (myCtx, posX, posY, widght, height) {
-    myCtx.fillRect(posX, posY, widght, height);
+  var doFillRect = function (localCtx, posX, posY, widght, height) {
+    localCtx.fillRect(posX, posY, widght, height);
   };
 
   doWindow(ctx, resultWindows['posX'] + 10, resultWindows['posY'] + 10, resultWindows['widght'], resultWindows['height'], resultWindows['frontColor']);
   doWindow(ctx, resultWindows['posX'], resultWindows['posY'], resultWindows['widght'], resultWindows['height'], resultWindows['backColor']);
-  ctx.fillStyle = '#000';
-  ctx.font = '16px PT Mono';
 
-  doFillText(ctx, 'Ура вы победили!', resultWindows['posX'] + 30, resultWindows['posY'] + 30);
-  doFillText(ctx, 'Список результатов:', resultWindows['posX'] + 30, resultWindows['posY'] + 50);
+  doFillText(ctx, 'Ура вы победили!', resultWindows['posX'] + 30, resultWindows['posY'] + 30, style, font);
+  doFillText(ctx, 'Список результатов:', resultWindows['posX'] + 30, resultWindows['posY'] + 50, style, font);
 
-  var max = findMaxPlayerTime(times);
+  var max = getMaxPlayerTime(times);
   var histogramHeigth = histogramParams['histogramHeigth'];
   var step = histogramHeigth / (max - 0);
   var timesLength = times.length;
