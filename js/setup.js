@@ -5,6 +5,16 @@ var wizardsCoatsColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 1
 var wizardsEyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
 var numbersWizards = 4;
 
+/**
+ * Создание массива объктов содержащие информацию о волшебниках
+ *
+ * @param {any} names
+ * @param {any} sunames
+ * @param {any} coatsColor
+ * @param {any} eyesColor
+ * @returns
+ */
+
 var createWizardsPararameters = function (names, sunames, coatsColor, eyesColor) {
   var wizardsParameters = [];
   for (var i = 0; i < numbersWizards; i++) {
