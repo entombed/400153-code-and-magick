@@ -1,13 +1,13 @@
 'use strict';
-var wizardsName = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var wizardsSuname = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var wizardsCoatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var wizardsEyesColor = ['black', 'red', 'blue', 'yellow', 'green'];
-var numberWizards = 4;
+var wizardsNames = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
+var wizardsSunames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
+var wizardsCoatsColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+var wizardsEyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
+var numbersWizards = 4;
 
 var createWizardsPararameters = function (names, sunames, coatsColor, eyesColor) {
   var wizardsParameters = [];
-  for (var i = 0; i < numberWizards; i++) {
+  for (var i = 0; i < numbersWizards; i++) {
     wizardsParameters[i] = {
       'name': getRandomParameter(names),
       'suname': getRandomParameter(sunames),
@@ -32,7 +32,7 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
-var wizards = createWizardsPararameters(wizardsName, wizardsSuname, wizardsCoatColor, wizardsEyesColor);
+var wizards = createWizardsPararameters(wizardsNames, wizardsSunames, wizardsCoatsColors, wizardsEyesColors);
 var userDialog = document.querySelector('.setup');
 userDialog.classList.remove('hidden');
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
