@@ -4,6 +4,63 @@ var wizardsSunames = ['да Марья', 'Верон', 'Мирабелла', 'В
 var wizardsCoatsColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var wizardsEyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
 var numbersWizards = 4;
+var FIREBALL_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
+var KEY_CODES = {
+  escape: 27,
+  enter: 13
+};
+
+
+// Open / hide setup
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+var setupSubmit = setup.querySelector('.setup-submit');
+
+
+var onPopupEscPress = function (event) {
+  if (event.keyCode === KEY_CODES['escape']) {
+    setup.classList.add('hidden');
+  }
+};
+
+var onPopupEnterPress = function (event) {
+  if (event.keyCode === KEY_CODES['enter']) {
+    if (setup.classList.contains('hidden')) {
+      setup.classList.remove('hidden');
+    } else {
+      setup.classList.add('hidden');
+    }
+  }
+};
+
+// Open
+var openPopup = function () {
+  setup.classList.remove('hidden');
+
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', openPopup);
+setupOpen.addEventListener('keydown', onPopupEnterPress);
+
+// Close
+var closePopup = function () {
+  setup.classList.add('hidden');
+};
+
+setupClose.addEventListener('click', closePopup);
+setupClose.addEventListener('keydown', onPopupEnterPress);
+
+setupSubmit.addEventListener('click', closePopup);
+setupSubmit.addEventListener('keydown', onPopupEnterPress);
 
 /**
  * Создание массива объктов содержащие информацию о волшебниках
@@ -58,11 +115,11 @@ var renderWizard = function (wizard) {
 };
 
 var wizards = createWizardsPararameters(wizardsNames, wizardsSunames, wizardsCoatsColors, wizardsEyesColors);
-var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
-userDialog.querySelector('.setup-similar').classList.remove('hidden');
+/* var setup = document.querySelector('.setup'); */
+/* userDialog.classList.remove('hidden');*/
+setup.querySelector('.setup-similar').classList.remove('hidden');
 
-var similarListElement = userDialog.querySelector('.setup-similar-list');
+var similarListElement = setup.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
 var fragment = document.createDocumentFragment();
 
