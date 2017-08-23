@@ -8,11 +8,11 @@ var numbersWizards = 4;
 /**
  * Создание массива объктов содержащие информацию о волшебниках
  *
- * @param {any} names
- * @param {any} sunames
- * @param {any} coatsColor
- * @param {any} eyesColor
- * @returns
+ * @param {array} names массив имен
+ * @param {array} sunames масиив фамилий
+ * @param {array} coatsColor масиив цвет плащей
+ * @param {array} eyesColor массив цвет глаз
+ * @return
  */
 
 var createWizardsPararameters = function (names, sunames, coatsColor, eyesColor) {
@@ -28,17 +28,32 @@ var createWizardsPararameters = function (names, sunames, coatsColor, eyesColor)
   return wizardsParameters;
 };
 
+/**
+ * Выбирает случайный элемент из масиива
+ *
+ * @param {array} arrayParameters
+ * @return случайный элемент
+ */
+
 var getRandomParameter = function (arrayParameters) {
   var arrayLength = arrayParameters.length;
   var arrayItem = Math.floor(Math.random() * arrayLength);
   return arrayParameters[arrayItem];
 };
 
+
+/**
+ * Создает объект для вставки в HTML
+ *
+ * @param {obj} wizard
+ * @return
+ */
+
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
-  wizardElement.querySelector('.setup-similar-label').textContent = wizard.name + ' ' + wizard.suname;
-  wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-  wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyeColor;
+  wizardElement.querySelector('.setup-similar-label').textContent = wizard['name'] + ' ' + wizard['suname'];
+  wizardElement.querySelector('.wizard-coat').style.fill = wizard['coatColor'];
+  wizardElement.querySelector('.wizard-eyes').style.fill = wizard['eyeColor'];
   return wizardElement;
 };
 
@@ -47,7 +62,7 @@ var userDialog = document.querySelector('.setup');
 userDialog.classList.remove('hidden');
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
 
-var similarListElement = document.querySelector('.setup-similar-list');
+var similarListElement = userDialog.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
 var fragment = document.createDocumentFragment();
 
