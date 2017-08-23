@@ -4,35 +4,29 @@ var wizardsSunames = ['да Марья', 'Верон', 'Мирабелла', 'В
 var wizardsCoatsColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var wizardsEyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
 var numbersWizards = 4;
-var FIREBALL_COLORS = [
-  '#ee4830',
-  '#30a8ee',
-  '#5ce6c0',
-  '#e848d5',
-  '#e6e848'
-];
-
-var KEY_CODES = {
+var fireballColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+var keyCodes = {
   escape: 27,
   enter: 13
 };
 
-
-// Open / hide setup
 var setup = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
 var setupSubmit = setup.querySelector('.setup-submit');
-
+var setupWizard = setup.querySelector('.setup-wizard');
+var setupWizardCoat = setupWizard.querySelector('.wizard-coat');
+var setupWizardEyes = setupWizard.querySelector('.wizard-eyes');
+var setupWizardFireball = document.querySelector('.setup-fireball-wrap');
 
 var onPopupEscPress = function (event) {
-  if (event.keyCode === KEY_CODES['escape']) {
+  if (event.keyCode === keyCodes['escape']) {
     setup.classList.add('hidden');
   }
 };
 
 var onPopupEnterPress = function (event) {
-  if (event.keyCode === KEY_CODES['enter']) {
+  if (event.keyCode === keyCodes['enter']) {
     if (setup.classList.contains('hidden')) {
       setup.classList.remove('hidden');
     } else {
@@ -41,17 +35,14 @@ var onPopupEnterPress = function (event) {
   }
 };
 
-// Open
 var openPopup = function () {
   setup.classList.remove('hidden');
-
   document.addEventListener('keydown', onPopupEscPress);
 };
 
 setupOpen.addEventListener('click', openPopup);
 setupOpen.addEventListener('keydown', onPopupEnterPress);
 
-// Close
 var closePopup = function () {
   setup.classList.add('hidden');
 };
@@ -61,6 +52,30 @@ setupClose.addEventListener('keydown', onPopupEnterPress);
 
 setupSubmit.addEventListener('click', closePopup);
 setupSubmit.addEventListener('keydown', onPopupEnterPress);
+
+var createFillColor = function (selector, cssClass, array) {
+  selector.querySelector(cssClass).style.fill = getRandomParameter(array);
+};
+
+var createBackgroundColor = function (selector, cssClass, array) {
+  selector.querySelector(cssClass).style.background = getRandomParameter(array);
+};
+
+var onPopupChangeWizardCoat = function () {
+  createFillColor(setupWizard, '.wizard-coat', wizardsCoatsColors);
+};
+
+var onPopupChangeWizardEyes = function () {
+  createFillColor(setupWizard, '.wizard-eyes', wizardsEyesColors);
+};
+
+var onPopupChangeWizardFireball = function () {
+  createBackgroundColor(document, '.setup-fireball-wrap', fireballColors);
+};
+
+setupWizardCoat.addEventListener('click', onPopupChangeWizardCoat);
+setupWizardEyes.addEventListener('click', onPopupChangeWizardEyes);
+setupWizardFireball.addEventListener('click', onPopupChangeWizardFireball);
 
 /**
  * Создание массива объктов содержащие информацию о волшебниках
