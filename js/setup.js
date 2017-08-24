@@ -27,11 +27,7 @@ var onPopupEscPress = function (event) {
 
 var onPopupEnterPress = function (event) {
   if (event.keyCode === keyCodes['enter']) {
-    if (setup.classList.contains('hidden')) {
-      setup.classList.remove('hidden');
-    } else {
-      setup.classList.add('hidden');
-    }
+    setup.classList.contains('hidden') ? setup.classList.remove('hidden') : setup.classList.add('hidden');
   }
 };
 
@@ -130,8 +126,8 @@ var renderWizard = function (wizard) {
 };
 
 var wizards = createWizardsPararameters(wizardsNames, wizardsSunames, wizardsCoatsColors, wizardsEyesColors);
-/* var setup = document.querySelector('.setup'); */
-/* userDialog.classList.remove('hidden');*/
+/*var setup = document.querySelector('.setup'); */
+setup.classList.remove('hidden');
 setup.querySelector('.setup-similar').classList.remove('hidden');
 
 var similarListElement = setup.querySelector('.setup-similar-list');
