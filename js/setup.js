@@ -19,6 +19,9 @@ var setupUserName = setupWindow.querySelector('.setup-user-name');
 var setupSubmit = setupWindow.querySelector('.setup-submit');
 var icon = setupButton.querySelector('.setup-open-icon');
 var inFocusNameField = false;
+var setupWizardEyes = setupWindow.querySelector('.wizard-eyes');
+var setupWizardCoat = setupWindow.querySelector('.wizard-coat');
+var setupFireballWrap = setupWindow.querySelector('.setup-fireball-wrap');
 /**
  * Создание массива объктов содержащие информацию о волшебниках
  *
@@ -71,6 +74,14 @@ similarListElement.appendChild(fragment);
 
 //+++++++++++++++++++++++++++++++++++++++++++++++
 
+/**
+ * убираем класс cssClass из HTML элементов содержащихся в массиве array
+ *
+ * @param {any} array
+ * @param {any} cssClass
+ * @returns
+ */
+
 function showSetupWindow(array, cssClass) {
   var length = array.length;
   return function () {
@@ -80,12 +91,29 @@ function showSetupWindow(array, cssClass) {
   };
 }
 
+var createColorElement = function (array, selector, check) {
+  if (check === 'fill') {
+    selector.style.fill = getRandomParameter(array);
+  } else if (check === 'background') {
+    selector.style.background = getRandomParameter(array);
+  }
+};
+/** дабавляем class hidden при нажатии ESC
+ *
+ *
+ * @param {any} event
+ */
+
 function closeSetupHendler(event) {
   if ((event.keyCode === keyCodes.ESC || event.target === setupCloseButton) && !inFocusNameField) {
     setupWindow.classList.add('hidden');
   }
 }
 
+/**
+ * добавляем атрибуты к HTML элементам
+ *
+ */
 function initPage() {
   icon.setAttribute('tabindex', '0');
   setupCloseButton.setAttribute('tabindex', '0');
@@ -93,11 +121,23 @@ function initPage() {
   setupUserName.setAttribute('minlength', '2');
 }
 
+/**
+ * убираем class hidden при нажатии ENTER
+ *
+ * @param {any} event
+ */
+
 function enterPressHandler(event) {
   if (event.keyCode === keyCodes.ENTER) {
     setupWindow.classList.remove('hidden');
   }
 }
+
+/**
+ * обрабатываем клик мышки на блоке setup
+ *
+ * @param {any} event
+ */
 
 function setupClickHendler(event) {
   switch (event.target) {
@@ -107,8 +147,27 @@ function setupClickHendler(event) {
     case setupSubmit:
       closeSetupHendler(event);
       break;
+    case setupWizardEyes:
+      createColorElement(wizardsEyesColors, setupWizardEyes, 'fill');
+      break;
+/* Не отрабатывается данный выбор */
+/*
+      case setupFireballWrap:
+      console.log(event);
+      createColorFireball(fireballColors, setupFireballWrap);
+      break;
+*/
+    case setupWizardCoat:
+      createColorElement(wizardsCoatsColors, setupWizardCoat, 'fill');
+      break;
   }
 }
+
+/**
+ * обрабатываем нажатие клавиш
+ *
+ * @param {any} event
+ */
 function setupKeyDownHendler(event) {
   if (event.keyCode === keyCodes.ENTER) {
     switch (event.target) {
@@ -125,16 +184,29 @@ function setupKeyDownHendler(event) {
 initPage();
 
 setupButton.addEventListener('click', showSetupWindow([setupWindow, setupSimilar], 'hidden'));
+
+/* слушатель событий для иконки */
 icon.addEventListener('keydown', enterPressHandler);
 
+/* слушатель для проверки поле ввода имени в фокусе */
 setupUserName.addEventListener('focus', function () {
   inFocusNameField = true;
 });
+/* слушатель для проверки поле ввода имени НЕ в фокусе */
 setupUserName.addEventListener('blur', function () {
   inFocusNameField = false;
 });
 
+/* слушатель нажатия клавиши мыши */
 setupWindow.addEventListener('click', setupClickHendler);
+/* слушатель нажатий клавиш */
 setupWindow.addEventListener('keydown', setupKeyDownHendler);
 
 document.addEventListener('keydown', closeSetupHendler);
+
+
+
+function testFireball() {
+  createColorElement(fireballColors, setupFireballWrap, 'background');
+}
+setupFireballWrap.addEventListener('click', testFireball);
