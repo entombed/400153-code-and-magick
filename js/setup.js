@@ -60,8 +60,6 @@ var renderWizard = function (wizard) {
 };
 
 var wizards = createWizardsPararameters(wizardsNames, wizardsSunames, wizardsCoatsColors, wizardsEyesColors);
-/* setupWindow.classList.remove('hidden');
-setupWindow.querySelector('.setup-similar').classList.remove('hidden'); */
 
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
@@ -91,12 +89,15 @@ function showSetupWindow(array, cssClass) {
   };
 }
 
-var createColorElement = function (array, selector, check) {
-  if (check === 'fill') {
-    selector.style.fill = getRandomParameter(array);
-  } else if (check === 'background') {
-    selector.style.backgroundColor = getRandomParameter(array);
-  }
+/**
+ * Закрашивает цветом область (глаза, плащ, фаербол мага в окне настройки)
+ * в param передается строка (fill, background)
+ * @param {array} array массив цветов
+ * @param {obj} selector селектор HTML элемента
+ * @param {string} param HTML атрибут
+ */
+var createColorElement = function (array, selector, param) {
+  selector.style[param] = getRandomParameter(array);
 };
 /** дабавляем class hidden при нажатии ESC
  *
@@ -150,13 +151,9 @@ function setupClickHendler(event) {
     case setupWizardEyes:
       createColorElement(wizardsEyesColors, setupWizardEyes, 'fill');
       break;
-/* Не отрабатывается данный выбор */
-/*
-      case setupFireballWrap:
-      console.log(event);
-      createColorFireball(fireballColors, setupFireballWrap);
+    case setupFireballWrap.children[0]:
+      createColorElement(fireballColors, setupFireballWrap, 'background');
       break;
-*/
     case setupWizardCoat:
       createColorElement(wizardsCoatsColors, setupWizardCoat, 'fill');
       break;
@@ -182,12 +179,9 @@ function setupKeyDownHendler(event) {
 }
 
 initPage();
-
 setupButton.addEventListener('click', showSetupWindow([setupWindow, setupSimilar], 'hidden'));
-
 /* слушатель событий для иконки */
 icon.addEventListener('keydown', enterPressHandler);
-
 /* слушатель для проверки поле ввода имени в фокусе */
 setupUserName.addEventListener('focus', function () {
   inFocusNameField = true;
@@ -196,17 +190,8 @@ setupUserName.addEventListener('focus', function () {
 setupUserName.addEventListener('blur', function () {
   inFocusNameField = false;
 });
-
 /* слушатель нажатия клавиши мыши */
 setupWindow.addEventListener('click', setupClickHendler);
 /* слушатель нажатий клавиш */
 setupWindow.addEventListener('keydown', setupKeyDownHendler);
-
 document.addEventListener('keydown', closeSetupHendler);
-
-
-
-function testFireball() {
-  createColorElement(fireballColors, setupFireballWrap, 'background');
-}
-setupFireballWrap.addEventListener('click', testFireball);
