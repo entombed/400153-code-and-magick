@@ -95,7 +95,7 @@ var createColorElement = function (array, selector, check) {
   if (check === 'fill') {
     selector.style.fill = getRandomParameter(array);
   } else if (check === 'background') {
-    selector.style.background = getRandomParameter(array);
+    selector.style.backgroundColor = getRandomParameter(array);
   }
 };
 /** дабавляем class hidden при нажатии ESC
